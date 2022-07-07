@@ -5,7 +5,7 @@ import Event from "../Event";
 
 describe('<Event /> comcponent', () => {
   let EventWrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     EventWrapper = shallow(<Event event={mockData[0]} />);
   });
 
