@@ -51,6 +51,8 @@
     ]
   },
   "devDependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+    "enzyme": "^3.11.0",
     "gh-pages": "^4.0.0"
   },
   "description": "This app  will provide access to a list of events for searchable cities. The info provided will include time, location as well as a chart for info on all events in a specific city.",
