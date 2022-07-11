@@ -26,8 +26,10 @@ class NumberOfEvents extends Component {
   render() {
     return (
       <div className="NumberOfEvents">
+        <label htmlFor="number-input">Number of events:</label><br />
         <input
           type="text"
+          id="number-input"
           className="number-of-events"
           value={this.state.numberOfEvents}
           onChange={this.handleInputChanged}
