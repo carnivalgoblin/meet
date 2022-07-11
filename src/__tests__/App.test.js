@@ -73,4 +73,43 @@ describe('<App /> integration', () => {
     expect(AppWrapper.state('events')).toEqual(allEvents);
     AppWrapper.unmount();
   });
+
+  test('load default list of 32 events', async () => {
+    const AppWrapper = mount(<App />);
+    const allEvents = await getEvents();
+    expect(AppWrapper.state('numberOfEvents')).not.toEqual(undefined);
+    const sliceNumber = AppWrapper.state('numberOfEvents');
+    expect(AppWrapper.state('events')).toEqual(allEvents.slice(0, sliceNumber));
+    AppWrapper.unmount();
+  });
+
+  test('input change in NumberOFEvnts updates state in App component', async () => {
+    const AppWrapper = mount(<App />);
+    const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
+    const selectedCity = "London, UK";
+    const selectedNumber = 1;
+    await NumberOfEventsWrapper.instance().handleInputChanged({ target: { value: selectedNumber } });
+    const eventsToShow = mockData
+      .filter((e) => e.location == selectedCity)
+      .slice(0, selectedNumber);
+    AppWrapper.setState({ events: eventsToShow });
+    expect(AppWrapper.state('events')).toEqual(eventsToShow);
+    expect(AppWrapper.state('events')).not.toEqual(undefined);
+    expect(AppWrapper.state('events')).toHaveLength(selectedNumber);
+    AppWrapper.unmount();
+  });
+
+  test('input change in NumberOfEvents and city change ind CitySearch updates state in app component', async () => {
+    const AppWrapper = mount(<App />);
+    const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
+    const CitySearchWrapper = AppWrapper.find(CitySearch);
+    const location = extractLocations(mockData)[0];
+    await CitySearchWrapper.instance().handleItemClicked(location);
+    const selectedNumber = 1;
+    await NumberOfEventsWrapper.instance().handleInputChanged({ target: { value: selectedNumber } });
+    AppWrapper.setState({ locationSelected: location });
+    expect(AppWrapper.state('events')).not.toEqual(undefined);
+    expect(AppWrapper.state('events')).toHaveLength(selectedNumber);
+    AppWrapper.unmount();
+  });
 });

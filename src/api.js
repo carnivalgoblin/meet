@@ -32,21 +32,6 @@ const removeQuery = () => {
   }
 };
 
-/* const getToken = async (code) => {
-  const encodeCode = encodeURIComponent(code);
-  const { accessToken } = await fetch(
-    'https://z0ka8x6vp9.execute-api.eu-central-1.amazonaws.com/dev/api/token' + '/' + encodeCode
-  )
-    .then((res) => {
-      return res.json();
-    })
-    .catch((error) => error);
-
-  accessToken && localStorage.setItem("access_token", accessToken);
-
-  return accessToken;
-}; */
-
 const getToken = async (code) => {
   try {
     const encodeCode = encodeURIComponent(code);
