@@ -6,8 +6,7 @@ import CitySearch from "../CitySearch";
 import NumberOfEvents from "../NumberOfEvents";
 import { mockData } from '../mock-data';
 import { extractLocations, getEvents } from '../api';
-import { async } from "q";
-import exp from "constants";
+
 
 describe('<App /> component', () => {
   let AppWrapper;
@@ -90,7 +89,7 @@ describe('<App /> integration', () => {
     const selectedNumber = 1;
     await NumberOfEventsWrapper.instance().handleInputChanged({ target: { value: selectedNumber } });
     const eventsToShow = mockData
-      .filter((e) => e.location == selectedCity)
+      .filter((e) => e.location = selectedCity)
       .slice(0, selectedNumber);
     AppWrapper.setState({ events: eventsToShow });
     expect(AppWrapper.state('events')).toEqual(eventsToShow);
