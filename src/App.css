@@ -240,14 +240,19 @@ input[type="number"] {
   color: #494949;
   font-size: small;
   padding-bottom: 15px;
+  font-family: sans-serif;
 }
 
 .dateTime {
   color: #494949;
   font-size: small;
+  font-family: sans-serif;
 }
 
-.description {}
+.description {
+  margin: 15px 0;
+  font-family: sans-serif;
+}
 
 .card {
   text-align: center;
