@@ -2,6 +2,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import App from "../App";
 import EventList from "../EventList";
+import Event from "../Event";
 import CitySearch from "../CitySearch";
 import NumberOfEvents from "../NumberOfEvents";
 import { mockData } from '../mock-data';
@@ -109,6 +110,16 @@ describe('<App /> integration', () => {
     AppWrapper.setState({ locationSelected: location });
     expect(AppWrapper.state('events')).not.toEqual(undefined);
     expect(AppWrapper.state('events')).toHaveLength(selectedNumber);
+    AppWrapper.unmount();
+  });
+
+  test('input change in NumberOfEvents being passed to EventList', async () => {
+    const AppWrapper = mount(<App />);
+    const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
+    const selectedNumber = 2;
+    await NumberOfEventsWrapper.instance().handleInputChanged({ target: { value: selectedNumber } });
+    AppWrapper.setState({ locationSelected: 'all' });
+    expect(AppWrapper.find(EventList).props().events).toHaveLength(selectedNumber);
     AppWrapper.unmount();
   });
 });
