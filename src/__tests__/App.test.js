@@ -2,7 +2,6 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import App from "../App";
 import EventList from "../EventList";
-import Event from "../Event";
 import CitySearch from "../CitySearch";
 import NumberOfEvents from "../NumberOfEvents";
 import { mockData } from '../mock-data';
