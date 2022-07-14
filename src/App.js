@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import { extractLocations, getEvents } from './api';
+import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
 import './App.css';
 import CitySearch from './CitySearch';
 import EventList from './EventList';
 import NumberOfEvents from './NumberOfEvents';
-
+import { OfflineAlert } from './Alert';
+import WelcomeScreen from './WelcomeScreen';
 
 class App extends Component {
 
@@ -13,16 +14,42 @@ class App extends Component {
     events: [],
     locations: [],
     numberOfEvents: 32,
-    locationSelected: 'all'
+    locationSelected: 'all',
+    offlineText: '',
+    showWelcomeScreen: undefined
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.mounted = true;
+
+    const accessToken = localStorage.getItem('access_token');
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          this.setState({ events, locations: extractLocations(events) });
+        }
+      });
+    }
+
     getEvents().then((events) => {
       if (this.mounted) {
         this.setState({ events, locations: extractLocations(events) });
       }
     });
+
+    if (!navigator.onLine) {
+      this.setState({
+        offlineText: 'The events displayed are a cached version, since there is no internet connection available'
+      });
+    } else {
+      this.setState({
+        offlineText: ''
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -49,14 +76,19 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.showWelcomeScreen === undefined)
+      return <div className="App" />
+
     return (
       <div className="App">
         <h1>Meet App</h1>
         <Container>
+          <OfflineAlert text={this.state.offlineText} />
           <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
           <EventList events={this.state.events} />
           <NumberOfEvents updateEvents={this.updateEvents} />
         </Container>
+        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} getAccessToken={() => { getAccessToken() }} />
       </div >
     );
   }
