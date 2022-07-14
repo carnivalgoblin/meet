@@ -19,8 +19,8 @@ class NumberOfEvents extends Component {
         warningText: '',
         numberOfEvents: value
       });
+      this.props.updateEvents(undefined, value);
     }
-    this.props.updateEvents(undefined, value);
   };
 
   render() {
