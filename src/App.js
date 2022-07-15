@@ -22,7 +22,7 @@ class App extends Component {
   async componentDidMount() {
     this.mounted = true;
 
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem("access_token");
     const isTokenValid = (await checkToken(accessToken)).error ? false : true;
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code");
@@ -35,11 +35,11 @@ class App extends Component {
       });
     }
 
-    getEvents().then((events) => {
+    /* getEvents().then((events) => {
       if (this.mounted) {
         this.setState({ events, locations: extractLocations(events) });
       }
-    });
+    }); */
 
     if (!navigator.onLine) {
       this.setState({
@@ -76,7 +76,7 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.showWelcomeScreen) return <div className="App" />;
+    if (this.state.showWelcomeScreen) return <div className="App" />;
 
     return (
       <div className="App">
