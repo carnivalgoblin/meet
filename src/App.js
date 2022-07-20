@@ -22,10 +22,10 @@ class App extends Component {
   async componentDidMount() {
     this.mounted = true;
 
-    const accessToken = localStorage.getItem("access_token");
-    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const accessToken = localStorage.getItem('access_token');
+    let isTokenValid = (await checkToken(accessToken)).error ? false : true;
     const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get("code");
+    const code = searchParams.get('code');
     this.setState({ showWelcomeScreen: !(code || isTokenValid) });
     if ((code || isTokenValid) && this.mounted) {
       getEvents().then((events) => {
@@ -35,19 +35,13 @@ class App extends Component {
       });
     }
 
-    /* getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
-      }
-    }); */
-
     if (!navigator.onLine) {
       this.setState({
-        offlineText: 'The events displayed are a cached version, since there is no internet connection available'
+        offlineText: "Your're offline! The data was loaded from the cache."
       });
     } else {
       this.setState({
-        offlineText: ''
+        offlineText: '',
       });
     }
   }
@@ -61,7 +55,7 @@ class App extends Component {
       eventCount = this.state.numberOfEvents;
     } else { this.setState({ numberOfEvents: eventCount }) }
     if (location === undefined) {
-      location = this.state.locationSelected;
+      location = 'all';
     }
     getEvents().then((events) => {
       const locationEvents = (location === 'all') ?
@@ -76,7 +70,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.showWelcomeScreen) return <div className="App" />;
+    /*     if (this.state.showWelcomeScreen) return <div className="App" />; */
 
     return (
       <div className="App">
@@ -87,7 +81,7 @@ class App extends Component {
           <EventList events={this.state.events} />
           <NumberOfEvents updateEvents={this.updateEvents} />
         </Container>
-        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} getAccessToken={() => { getAccessToken() }} />
+        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} getAccessToken={getAccessToken} />
       </div >
     );
   }
