@@ -78,4 +78,10 @@ describe('<CitySearch /> component', () => {
     expect(CitySearchWrapper.state('showSuggestions')).toBe(false);
     expect(CitySearchWrapper.find('.suggestions').prop('style')).toEqual({ display: 'none' });
   });
+
+  test('change state when city input is invalid', () => {
+    CitySearchWrapper.setState({ query: 'all' });
+    CitySearchWrapper.find('.city').simulate('change', { target: { value: 'Berlins' } });
+    expect(CitySearchWrapper.state('infoText')).toBe('We can not find the city you are looking for. Please try another city');
+  });
 });
