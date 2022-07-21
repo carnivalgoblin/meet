@@ -34,17 +34,28 @@ class App extends Component {
         }
       });
     }
+  }
 
-    if (!navigator.onLine) {
+  // eslint-disable-next-line no-dupe-class-members
+  componentDidMount() {
+
+    console.log(navigator.onLine);
+
+    let online = navigator.onLine;
+
+    console.log(online);
+    if (online === false) {
       this.setState({
-        offlineText: "Your're offline! The data was loaded from the cache."
+        offlineText: "Your're offline! The data was loaded from cache.",
+        locationSelected: 'all'
       });
     } else {
       this.setState({
-        offlineText: '',
+        offlineText: ''
       });
     }
   }
+
 
   componentWillUnmount() {
     this.mounted = false;
@@ -72,11 +83,16 @@ class App extends Component {
   render() {
     /*     if (this.state.showWelcomeScreen) return <div className="App" />; */
 
+    const {
+      offlineText
+    } = this.state;
+
     return (
       <div className="App">
         <h1>Meet App</h1>
+        <OfflineAlert text={offlineText} />
         <Container>
-          <OfflineAlert text={this.state.offlineText} />
+
           <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
           <EventList events={this.state.events} />
           <NumberOfEvents updateEvents={this.updateEvents} />
