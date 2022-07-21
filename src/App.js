@@ -22,6 +22,8 @@ class App extends Component {
   async componentDidMount() {
     this.mounted = true;
 
+    this.checkOnline();
+
     const accessToken = localStorage.getItem('access_token');
     let isTokenValid = (await checkToken(accessToken)).error ? false : true;
     const searchParams = new URLSearchParams(window.location.search);
@@ -36,8 +38,7 @@ class App extends Component {
     }
   }
 
-  // eslint-disable-next-line no-dupe-class-members
-  componentDidMount() {
+  checkOnline = () => {
 
     console.log(navigator.onLine);
 
