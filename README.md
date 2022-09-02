@@ -101,3 +101,35 @@ So that I can see organized  statistics about the events in that specific city.
 Given the a search for a city has been started<br/>
 When the user clicks on a city’s name<br/>
 Then the more info on upcoming events for that city will be displayed<br/>
+
+# Getting Started
+
+To get started with the meet App follow these steps.
+
+## Prerequisites
+
+Your system should have a NPM.
+
+- npm
+
+  `npm install npm@latest -g`
+
+## Installation
+
+Required installation to get started with the App, follow these steps.
+
+Clone the repo
+
+`git clone https://github.com/carnivalgoblin/meet.git`
+
+Install NPM packages
+
+`npm install`
+
+Start the app
+
+`npm run start`
+
+To push changes to github pages
+
+`npm run deploy`
