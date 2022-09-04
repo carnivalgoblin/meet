@@ -6,7 +6,7 @@ This is a serverless, progressive web application (PWA) with React using a
 test-driven development (TDD) technique. The application uses the Google
 Calendar API to fetch upcoming events.
 
-![meet-app](src/meet-app.png)
+![meet-app](src/meet-app-1.png)
 
 # Technologies used
 - React
